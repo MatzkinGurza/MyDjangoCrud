@@ -1,1 +1,11 @@
-<h1>Hello World</h1>
+<h1>Post</h1>
+<ul>
+    {% for post in object_list %}
+        <li>
+        <a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a> | {{post.author}}<br/>
+        {{post.body}}<br/>
+        - {{post.author.last_name}}, {{post.author.first_name}}<br/>
+        {{post.author.email}}
+        </li>
+    {% endfor %}
+</ul>
