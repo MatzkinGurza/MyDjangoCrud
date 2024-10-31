@@ -45,6 +45,21 @@ class UpdatePostView(UpdateView):
     model=Post
     form_class = PostFormUpdate
     template_name= 'update_post.html'
+    def form_valid(self, form):
+        image_file = form.cleaned_data.get('image')
+        if image_file:
+            # Enviar a imagem para o Imgur
+            url = "https://api.imgur.com/3/image"
+            headers = {"Authorization": f"Client-ID {settings.IMGUR_CLIENT_ID}"}
+            files = {'image': image_file.read()}
+
+            response = requests.post(url, headers=headers, files=files)
+            data = response.json()
+
+            if response.status_code == 200 and data['success']:
+                form.instance.image_url = data['data']['link']
+        
+        return super().form_valid(form)
 
 class DeletePostView(DeleteView):
     model=Post

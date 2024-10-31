@@ -18,7 +18,8 @@ class PostForm(forms.ModelForm):
         }
 
 class PostFormUpdate(forms.ModelForm):
-    # would make sense to add edit image here
+    image = forms.ImageField(required=False)  # campo para upload de imagem
+
     class Meta: 
         model = Post
         fields = ('title', 

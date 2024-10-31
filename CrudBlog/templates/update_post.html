@@ -6,7 +6,11 @@
 <h1>edit your blog post</h1>
 
 <div class="form-group">
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
+        {% if post.image_url %}
+        <strong>Current Image</strong><br/>
+        <img src="{{ post.image_url }}" alt="Imagem do Post" class="img-thumbnail w-25">
+        {% endif %}<br/>
         {% csrf_token %}
         {{form.as_p}}
         <button class="btn btn-secondary">Update</button>
