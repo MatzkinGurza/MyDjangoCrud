@@ -3,6 +3,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post
 from .forms import PostForm, PostFormUpdate
 from django.urls import reverse_lazy
+import requests
+from django.conf import settings
 
 # def home(request):
 #     return render(request, 'home.html', {})
@@ -10,7 +12,8 @@ from django.urls import reverse_lazy
 class HomeView(ListView):
     model = Post
     template_name = 'home.html'
-    ordering = ['-id'] #will make the order be last in first (would be better to use date field)
+    #ordering = ['-id'] #will make the order be last in first (would be better to use date field)
+    ordering = ['-post_date']
 
 class ArticleDetailView(DetailView):
     model = Post
@@ -22,6 +25,21 @@ class AddPostView(CreateView):
     template_name = 'add_post.html'
     # fields = '__all__'
     # fields = ('title', 'tag','body')
+    def form_valid(self, form):
+        image_file = form.cleaned_data.get('image')
+        if image_file:
+            # Enviar a imagem para o Imgur
+            url = "https://api.imgur.com/3/image"
+            headers = {"Authorization": f"Client-ID {settings.IMGUR_CLIENT_ID}"}
+            files = {'image': image_file.read()}
+
+            response = requests.post(url, headers=headers, files=files)
+            data = response.json()
+
+            if response.status_code == 200 and data['success']:
+                form.instance.image_url = data['data']['link']
+
+        return super().form_valid(form)
 
 class UpdatePostView(UpdateView):
     model=Post

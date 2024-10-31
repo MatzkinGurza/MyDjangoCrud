@@ -2,6 +2,8 @@ from django import forms
 from .models import Post
 
 class PostForm(forms.ModelForm):
+    image = forms.ImageField(required=False)  # campo para upload de imagem
+
     class Meta: 
         model = Post
         fields = ('title', 
@@ -16,6 +18,7 @@ class PostForm(forms.ModelForm):
         }
 
 class PostFormUpdate(forms.ModelForm):
+    # would make sense to add edit image here
     class Meta: 
         model = Post
         fields = ('title', 
