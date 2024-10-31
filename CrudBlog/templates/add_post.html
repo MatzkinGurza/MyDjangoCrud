@@ -3,6 +3,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 <h1>add a blog post</h1>
 
 <div class="form-group">
@@ -13,5 +15,9 @@
     </form>
 </div>
 
+{% else %}
+<h2> You need to be logged in to do this</h2>
+
+{% endif %}
 
 {% endblock %}

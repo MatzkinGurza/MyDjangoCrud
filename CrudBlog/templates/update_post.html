@@ -3,6 +3,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 <h1>edit your blog post</h1>
 
 <div class="form-group">
@@ -20,4 +22,12 @@
 <br/>
 <br/>
 <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+
+{% else %}
+<h2> You need to be logged in to do this</h2>
+
+{% endif %}
+
+
 {% endblock %}
+
