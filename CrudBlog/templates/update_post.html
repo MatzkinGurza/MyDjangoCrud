@@ -9,13 +9,20 @@
 
 <div class="form-group">
     <form method="POST" enctype="multipart/form-data">
-        {% if post.image_url %}
-        <strong>Current Image</strong><br/>
-        <img src="{{ post.image_url }}" alt="Imagem do Post" class="img-thumbnail w-25">
-        {% endif %}<br/>
         {% csrf_token %}
-        {{form.as_p}}
-        <button class="btn btn-secondary">Update</button>
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" class="form-control" required>
+
+        <label for="tag">Tag:</label>
+        <input type="text" id="tag" name="tag" class="form-control" required>
+
+        <label for="body">Body:</label>
+        <textarea id="body" name="body" class="form-control" required></textarea>
+
+        <label for="image">Image (optional):</label>
+        <input type="file" id="image" name="image" class="form-control">
+
+        <button class="btn btn-secondary mt-3">Post</button>
     </form>
 </div>
 

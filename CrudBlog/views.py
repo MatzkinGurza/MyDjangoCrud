@@ -1,68 +1,60 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
-from .forms import PostForm, PostFormUpdate
-from django.urls import reverse_lazy
-import requests
 from django.conf import settings
+import requests
 
-# def home(request):
-#     return render(request, 'home.html', {})
+def post_list(request):
+    posts = Post.objects.all().order_by('-post_date')
+    return render(request, 'home.html', {'posts': posts})
 
-class HomeView(ListView):
-    model = Post
-    template_name = 'home.html'
-    #ordering = ['-id'] #will make the order be last in first (would be better to use date field)
-    ordering = ['-post_date']
+def post_detail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render(request, 'article_details.html', {'post': post})
 
-class ArticleDetailView(DetailView):
-    model = Post
-    template_name = 'article_details.html'
+def post_create(request):
+    if request.method == 'POST':
+        title = request.POST.get("title")
+        tag = request.POST.get("tag")
+        body = request.POST.get("body")
+        image = request.FILES.get("image")
 
-class AddPostView(CreateView):
-    model = Post
-    form_class = PostForm
-    template_name = 'add_post.html'
-    # fields = '__all__'
-    # fields = ('title', 'tag','body')
-    def form_valid(self, form):
-        image_file = form.cleaned_data.get('image')
-        if image_file:
-            # Enviar a imagem para o Imgur
+        image_url = None
+        if image:
+            # Upload image to Imgur
             url = "https://api.imgur.com/3/image"
             headers = {"Authorization": f"Client-ID {settings.IMGUR_CLIENT_ID}"}
-            files = {'image': image_file.read()}
+            files = {'image': image.read()}
 
             response = requests.post(url, headers=headers, files=files)
             data = response.json()
-
             if response.status_code == 200 and data['success']:
-                form.instance.image_url = data['data']['link']
+                image_url = data['data']['link']
 
-        return super().form_valid(form)
+        # Save the post
+        post = Post.objects.create(
+            title=title,
+            tag=tag,
+            author=request.user,
+            body=body,
+            image_url=image_url,
+        )
+        return redirect('home')
+    return render(request, 'add_post.html')
 
-class UpdatePostView(UpdateView):
-    model=Post
-    form_class = PostFormUpdate
-    template_name= 'update_post.html'
-    def form_valid(self, form):
-        image_file = form.cleaned_data.get('image')
-        if image_file:
-            # Enviar a imagem para o Imgur
-            url = "https://api.imgur.com/3/image"
-            headers = {"Authorization": f"Client-ID {settings.IMGUR_CLIENT_ID}"}
-            files = {'image': image_file.read()}
+def post_update(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        post.title = request.POST.get('title')
+        post.tag = request.POST.get('tag')
+        post.body = request.POST.get('body')
+        post.save()
+        return redirect('article-detail', pk=post.pk)
+    return render(request, 'update_post.html', {'post': post})
 
-            response = requests.post(url, headers=headers, files=files)
-            data = response.json()
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('home')
+    return render(request, 'delete_post.html', {'post': post})
 
-            if response.status_code == 200 and data['success']:
-                form.instance.image_url = data['data']['link']
-        
-        return super().form_valid(form)
-
-class DeletePostView(DeleteView):
-    model=Post
-    template_name= 'delete_post.html'
-    success_url = reverse_lazy('home')
-   
