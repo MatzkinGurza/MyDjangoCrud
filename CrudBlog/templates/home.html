@@ -14,7 +14,7 @@
             {% endif %}
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> | {{post.author}}
+                    <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> | {{post.author}} on {{post.category}}
                     <p class="card-text">{{post.body|truncatewords:100|safe}}</p>
                     {% if user.is_authenticated %}
                     <small><a class="btn btn-primary" href="{% url 'update_post' post.pk %}">Edit</a></small>

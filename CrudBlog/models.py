@@ -6,10 +6,11 @@ from datetime import datetime, date
 class Category(models.Model):
     name = models.CharField(max_length=255, default="Unspecified")
     def __str__(self):
-        return self.title + ' | ' + str(self.author)
+        return self.name
 
     def get_absolute_url(self):
-        return reverse('article-detail', args=(str(self.id)))
+        return reverse('home')
+    
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
@@ -18,13 +19,13 @@ class Post(models.Model):
     body = models.TextField()
     post_date = models.DateTimeField(auto_now_add=True)
     image_url = models.URLField(blank=True, null=True)  # Campo para o link da imagem
+    category = models.CharField(max_length=255, default="Unspecified")
     
 
     def __str__(self):
         return self.title + ' | ' + str(self.author)
 
     def get_absolute_url(self):
-        #return reverse('article-detail', args=(str(self.id)))
         return reverse('home')
     
     

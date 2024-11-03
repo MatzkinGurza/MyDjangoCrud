@@ -1,6 +1,6 @@
 from django.shortcuts import render,  get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post
+from .models import Post, Category
 from .forms import PostForm, PostFormUpdate
 from django.urls import reverse_lazy
 import requests
@@ -28,6 +28,11 @@ class AddPostView(CreateView):
     template_name = 'add_post.html'
     # fields = '__all__'
     # fields = ('title', 'tag','body')
+
+class AddCategoryView(CreateView):
+    model = Category
+    template_name = 'add_category.html'
+    fields = "__all__"
 
     def form_valid(self, form):
         image_file = form.cleaned_data.get('image')

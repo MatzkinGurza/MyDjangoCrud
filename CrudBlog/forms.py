@@ -1,6 +1,7 @@
 from django import forms
-from .models import Post
+from .models import Post, Category
 
+choices = [x for x in Category.objects.all().values_list('name','name')] #to pass choices into forms select
 class PostForm(forms.ModelForm):
     image = forms.ImageField(required=False)  # campo para upload de imagem
 
@@ -9,11 +10,13 @@ class PostForm(forms.ModelForm):
         fields = ('title', 
                   'tag', 
                   'author', 
+                  'category',
                   'body' )
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control','placeholder':'write your title here'}), 
             'tag': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'choose a tag for the post'}), 
-            'author': forms.Select(attrs={'class': 'form-control'}), 
+            'author': forms.Select(attrs={'class': 'form-control'}),
+            'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),
             'body': forms.Textarea(attrs={'class': 'form-control','placeholder':'write your post here'})
         }
 
@@ -24,9 +27,11 @@ class PostFormUpdate(forms.ModelForm):
         model = Post
         fields = ('title', 
                   'tag',  
-                  'body' )
+                  'body',
+                   'category')
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control','placeholder':'write your title here'}), 
             'tag': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'choose a tag for the post'}), 
-            'body': forms.Textarea(attrs={'class': 'form-control','placeholder':'write your post here'})
+            'body': forms.Textarea(attrs={'class': 'form-control','placeholder':'write your post here'}),
+            'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),
         }
