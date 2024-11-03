@@ -47,6 +47,18 @@ def post_update(request, pk):
         post.title = request.POST.get('title')
         post.tag = request.POST.get('tag')
         post.body = request.POST.get('body')
+        image = request.FILES.get("image")
+        if image:
+            # Upload image to Imgur
+            url = "https://api.imgur.com/3/image"
+            headers = {"Authorization": f"Client-ID {settings.IMGUR_CLIENT_ID}"}
+            files = {'image': image.read()}
+
+            response = requests.post(url, headers=headers, files=files)
+            data = response.json()
+            if response.status_code == 200 and data['success']:
+                post.image_url = data['data']['link']
+        
         post.save()
         return redirect('article-detail', pk=post.pk)
     return render(request, 'update_post.html', {'post': post})
