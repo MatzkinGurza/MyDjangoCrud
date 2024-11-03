@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Blog - Home{% endblock %}
+{% block title %}Blog - {{cats}}{% endblock %}
 
 {% block content %}
 
-<h1>Posts</h1>
-    {% for post in object_list %}
+<h1>{{cats}}</h1>
+    {% for post in category_posts %}
     <div class="card mb-3">
         <div class="row g-0">
             {% if post.image_url %}

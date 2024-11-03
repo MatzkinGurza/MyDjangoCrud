@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1>{{post.title}}</h1>
-<small>{{ post.author.first_name }} {{post.last_name}} - {{post.post_date|date:"d/m/Y" }}</small>
+<small>{{ post.author.first_name }} {{post.author.last_name}} on {{post.category}} - {{post.post_date|date:"d/m/Y" }}</small>
 <br/>
 {% if post.image_url %}
     <img src="{{ post.image_url }}" alt="Imagem do Post", class="img-thumbnail w-25">

@@ -28,12 +28,7 @@ class AddPostView(CreateView):
     template_name = 'add_post.html'
     # fields = '__all__'
     # fields = ('title', 'tag','body')
-
-class AddCategoryView(CreateView):
-    model = Category
-    template_name = 'add_category.html'
-    fields = "__all__"
-
+    
     def form_valid(self, form):
         image_file = form.cleaned_data.get('image')
         if image_file:
@@ -47,8 +42,17 @@ class AddCategoryView(CreateView):
 
             if response.status_code == 200 and data['success']:
                 form.instance.image_url = data['data']['link']
-
+        
         return super().form_valid(form)
+
+class AddCategoryView(CreateView):
+    model = Category
+    template_name = 'add_category.html'
+    fields = "__all__"
+
+def CategoryView(request, cats):
+    category_posts = Post.objects.filter(category=cats)
+    return render(request, 'categories.html', {'cats':cats, "category_posts": category_posts})
 
 class UpdatePostView(UpdateView):
     model=Post
