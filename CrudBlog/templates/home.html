@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1>Posts</h1>
-    {% for post in object_list %}
+    {% for post in posts %}
     <div class="card mb-3">
         <div class="row g-0">
             {% if post.image_url %}
@@ -27,20 +27,6 @@
             <small class="text-body-secondary">{{post.post_date|date:"d/m/Y" }} - {{post.author.last_name}}, {{post.author.first_name}}</small>
         </div>
     </div>
-   
-        <!-- <a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a> | {{post.author}}
-        {% if post.image_url %}
-        <br/>
-        <img src="{{ post.image_url }}" alt="Imagem do Post" class="img-thumbnail w-25">
-        {% endif %}<br/>
-         {{post.body|truncatewords:100|safe}}<br/> trunca em 100 palavras para não poluir demais o ambiente -->
-        <!-- - {{post.author.last_name}}, {{post.author.first_name}}<br/>
-        <small>{{post.post_date|date:"d/m/Y" }}</small><br/>
-        {{post.author.email}}<br/>
-        {% if user.is_authenticated %}
-        <small><a href="{% url 'update_post' post.pk %}">(Edit)</a></small><br/>
-        <small><a href="{% url 'delete_post' post.pk %}">(Delete)</a></small>
-        {% endif %} -->
         
     {% endfor %}
 
