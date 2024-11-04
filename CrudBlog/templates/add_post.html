@@ -5,18 +5,19 @@
 
 {% if user.is_authenticated %}
 
-<h1>add a blog post</h1>
+<h1>add a blog post as {{user.username}}</h1>
 
 <div class="form-group">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
+        {{ form.media }}
         {{ form.as_p }}
         <button class="btn btn-secondary">Post</button>
     </form>
 </div>
 
 <script>
-    var name = "{{ user.username }}";
+    var name = "{{user.id}}";
     document.getElementById("authorID").value = name;
 </script>
 
@@ -24,5 +25,7 @@
 <h2> You need to be logged in to do this</h2>
 
 {% endif %}
+
+<a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
 
 {% endblock %}

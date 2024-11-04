@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "CrudBlog",
     "members",
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,28 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = 'home'
 
 LOGOUT_REDIRECT_URL = 'home'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Undo', 'Redo'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['HorizontalRule', 'Smiley', 'SpecialChar'],
+            ['TextColor', 'BGColor'],
+            # Add more buttons as needed, excluding image-related ones.
+        ],
+        'removePlugins': 'image,uploadimage,flash',
+        'extraPlugins': ','.join([
+            'justify',   # Justification options
+            'colorbutton',  # Text color options
+            'font',         # Font options
+            'showblocks',   # Show block structure
+        ]),
+        'height': 200,  # Set editor height without affecting width
+        'width': '100%',  # Full-width editor
+    }
+}

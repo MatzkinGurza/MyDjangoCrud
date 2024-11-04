@@ -14,13 +14,12 @@
                 <img src="{{ post.image_url }}" alt="Imagem do Post" class="img-thumbnail w-25">
                 {% endif %}<br/>
                 {% csrf_token %}
+                {{ form.media }}
                 {{form.as_p}}
                 <button class="btn btn-secondary">Update</button>
             </form>
         </div>
 
-        <br/>
-        <br/>
         <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
     {% else %}
         <h2> Your account does not have this permission</h2>
