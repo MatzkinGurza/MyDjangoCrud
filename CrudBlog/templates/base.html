@@ -22,7 +22,7 @@
 
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" data-bs-theme="dark">
-        <div class="container-fluid ">
+        <div class="container-fluid" data-bs-theme="dark">
           <div>
             <a class="navbar-brand" href="{% url 'home' %}">CrudBlog</a>
             {% if user.is_authenticated %}
@@ -37,28 +37,30 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
               </li>
-              {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'add_category' %}">Add Category</a>
-              </li>
-              {% endif %}
-              {% if cat_menu %}
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                    Categories
-                    </a>
-                    <ul class="dropdown-menu">
-                      {% for x in cat_menu %}
-                      <li><a class="dropdown-item" href="{% url 'categories' x %}">{{x}}</a></li>
-                      {% endfor %}
-                    </ul>
-              {% endif %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                  Categories
+                  </a>
+                    <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto; border-radius: 0px;">
+                      <li><a class="dropdown-item" href="{% url 'category_list' %}">List of all categories</a></li>
+                      {% if user.is_authenticated %}
+                      <li>
+                        <a class="dropdown-item" href="{% url 'add_category' %}">Add Category</a>
+                      </li>
+                      {% endif %}
+                      {% if cat_menu %}
+                      <li><hr class="dropdown-divider"></li>
+                        {% for cat in cat_menu %}
+                        <li><a class="dropdown-item" href="{% url 'categories' cat %}">{{cat}}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                  </ul>
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                   Account
                 </a>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto; border-radius: 0px;">
                   <li>
                   <form method="post" class="dropdown-item" action="{% url 'logout' %}">
                     {% csrf_token %}
@@ -70,7 +72,7 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                   Enter
                   </a>
-                  <ul class="dropdown-menu">
+                  <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto; border-radius: 0px;">
                   <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
                   <li><a class="dropdown-item" href="{% url 'register' %}">Register</a></li>
                 {% endif %}

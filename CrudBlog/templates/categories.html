@@ -4,7 +4,10 @@
 {% block content %}
 
     {% if category_posts %}
-        <h1>{{cats}}</h1>
+        <br/>
+        <h1>{{cats}}</h1> 
+        <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+        <br/><br/>
             {% for post in category_posts %}
                 <div class="card mb-3">
                     <div class="row g-0">
@@ -33,7 +36,5 @@
     {% else %}
         <h2> {{cats}} has no posts or {{cats}} is not a category </h2>
     {% endif %}
-
-    <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
 
 {% endblock %}

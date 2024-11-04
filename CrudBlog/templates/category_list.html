@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Blog - Category List{% endblock %}
+
+{% block content %}
+
+<h1>List of categories</h1>
+    <ul>
+    {% for cat in category_list %}
+    <li><a class="dropdown-item" href="{% url 'categories' cat %}">{{cat}}</a></li>
+    {% endfor %}
+    </ul>
+    <br/>
+    <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+
+{% endblock %}

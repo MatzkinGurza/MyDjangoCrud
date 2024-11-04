@@ -5,6 +5,7 @@ from .forms import PostForm, PostFormUpdate
 from django.urls import reverse_lazy
 import requests
 from django.conf import settings
+from django.http import Http404
 
 
 class HomeView(ListView):
@@ -73,8 +74,14 @@ class AddCategoryView(CreateView):
         context["cat_menu"] = cat_menu
         return context
 
+def CategoryListView(request):
+    category_list = Category.objects.all()
+    return render(request, 'category_list.html', {"category_list": category_list})
+
 def CategoryView(request, cats):
     category_posts = Post.objects.filter(category=cats)
+    if not category_posts.exists():  # Se não houver posts com a categoria solicitada
+        raise Http404("Uma de duas opções: \n1) Categoria não encontrada \n2) Não há posts nesta categoria")
     return render(request, 'categories.html', {'cats':cats.title(), "category_posts": category_posts})
 
 class UpdatePostView(UpdateView):
