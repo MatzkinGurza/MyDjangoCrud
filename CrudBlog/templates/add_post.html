@@ -15,6 +15,11 @@
     </form>
 </div>
 
+<script>
+    var name = "{{ user.username }}";
+    document.getElementById("authorID").value = name;
+</script>
+
 {% else %}
 <h2> You need to be logged in to do this</h2>
 

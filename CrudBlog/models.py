@@ -14,7 +14,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    tag = models.CharField(max_length=255, default="Unspecified") #parameter: default="default tag" should be used if creating this field after already having other inputs
+    tag = models.CharField(max_length=255) #parameter: default="default tag" should be used if creating this field after already having other inputs
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = models.TextField()
     post_date = models.DateTimeField(auto_now_add=True)

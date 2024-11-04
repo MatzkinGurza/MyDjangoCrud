@@ -3,31 +3,37 @@
 
 {% block content %}
 
-<h1>{{cats}}</h1>
-    {% for post in category_posts %}
-    <div class="card mb-3">
-        <div class="row g-0">
-            {% if post.image_url %}
-                <div class="col-md-4">
-                    <img src="{{ post.image_url }}" alt="Imagem do Post" class="card-img-top">
+    {% if category_posts %}
+        <h1>{{cats}}</h1>
+            {% for post in category_posts %}
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        {% if post.image_url %}
+                            <div class="col-md-4">
+                                <img src="{{ post.image_url }}" alt="Imagem do Post" class="card-img-top">
+                            </div>
+                        {% endif %}
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> | {{post.author}}
+                                <p class="card-text">{{post.body|truncatewords:100|safe}}</p>
+                                {% if user.is_authenticated %}
+                                <small><a class="btn btn-primary" href="{% url 'update_post' post.pk %}">Edit</a></small>
+                                <small><a class="btn btn-primary" href="{% url 'delete_post' post.pk %}">Delete</a></small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-body-secondary">{{post.post_date|date:"d/m/Y" }} - {{post.author.last_name}}, {{post.author.first_name}}</small>
+                    </div>
                 </div>
-            {% endif %}
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> | {{post.author}} on {{post.category}}
-                    <p class="card-text">{{post.body|truncatewords:100|safe}}</p>
-                    {% if user.is_authenticated %}
-                    <small><a class="btn btn-primary" href="{% url 'update_post' post.pk %}">Edit</a></small>
-                    <small><a class="btn btn-primary" href="{% url 'delete_post' post.pk %}">Delete</a></small>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <small class="text-body-secondary">{{post.post_date|date:"d/m/Y" }} - {{post.author.last_name}}, {{post.author.first_name}}</small>
-        </div>
-    </div>
-        
-    {% endfor %}
+                
+            {% endfor %}
+    {% else %}
+        <h2> {{cats}} has no posts or {{cats}} is not a category </h2>
+    {% endif %}
+
+    <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
 
 {% endblock %}

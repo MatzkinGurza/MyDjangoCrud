@@ -4,7 +4,7 @@
 {% block content %}
 
 <h1>{{post.title}}</h1>
-<small>{{ post.author.first_name }} {{post.author.last_name}} on {{post.category}} - {{post.post_date|date:"d/m/Y" }}</small>
+<small>{{ post.author.first_name }} {{post.author.last_name}} on <a href="{% url 'categories' post.category %}">{{post.category}}</a> - {{post.post_date|date:"d/m/Y" }}</small>
 <br/>
 {% if post.image_url %}
     <img src="{{ post.image_url }}" alt="Imagem do Post", class="img-thumbnail w-25">
@@ -13,8 +13,10 @@
 {{ post.body|safe }}<br/>
 {{post.author.email}}<br/>
 {% if user.is_authenticated %}
-<small><a href="{% url 'update_post' post.pk %}">(Edit)</a></small><br/>
-<small><a href="{% url 'delete_post' post.pk %}">(Delete)</a></small>
+    {% if user.id == post.author.id %}
+        <small><a href="{% url 'update_post' post.pk %}">(Edit)</a></small><br/>
+        <small><a href="{% url 'delete_post' post.pk %}">(Delete)</a></small>
+    {% endif %}
 {% endif %}
 <br/>
 <br/>

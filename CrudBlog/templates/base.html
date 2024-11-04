@@ -42,6 +42,17 @@
                 <a class="nav-link" href="{% url 'add_category' %}">Add Category</a>
               </li>
               {% endif %}
+              {% if cat_menu %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Categories
+                    </a>
+                    <ul class="dropdown-menu">
+                      {% for x in cat_menu %}
+                      <li><a class="dropdown-item" href="{% url 'categories' x %}">{{x}}</a></li>
+                      {% endfor %}
+                    </ul>
+              {% endif %}
               {% if user.is_authenticated %}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
