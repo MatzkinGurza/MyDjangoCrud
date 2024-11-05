@@ -1,11 +1,17 @@
 from django.shortcuts import render,  get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category
+from .models import Post, Category, Comment
 from .forms import PostForm, PostFormUpdate
 from django.urls import reverse_lazy, reverse
 import requests
 from django.conf import settings
 from django.http import Http404, HttpResponseRedirect
+
+class AddCommentView(CreateView):
+    model = Comment
+    template_name = 'add_comment.html'
+    fields = '__all__'
+    # fields = ('title', 'tag','body')
 
 
 class HomeView(ListView):

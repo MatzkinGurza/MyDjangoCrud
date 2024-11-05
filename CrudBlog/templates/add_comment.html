@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Blog - add comment{% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<br/>
+<h1>Add Comment{{user.username}}</h1>
+
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-secondary">Post Comment</button>
+    </form>
+</div>
+
+
+{% else %}
+<h2> You need to be logged in to do this</h2>
+
+{% endif %}
+
+<a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+
+{% endblock %}
