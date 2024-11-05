@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<br/>
+<h1>User Profile</h1>
+<br/>
+
+<div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-2">
+        {% if page_user.profilepic_url %}
+        <img src="{{page_user.profilepic_url}}" class="img-fluid rounded-start" alt="profile picture" >
+        {% else %}
+        <img src="{% static 'CrudBlog/images/default_profile_pic.jpeg' %}" class="img-fluid rounded-start" alt="profile picture" >
+        {% endif %}
+    </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title">{{ page_user.user.first_name }} {{ page_user.user.last_name }} </h5><br/>
+          {% if page_user.bio %}
+          <p class="card-text">{{page_user.bio|safe}}</p>
+          {% endif %}
+          {% if page_user.website_url %}
+          <a class="card-link"><small class="text-body-secondary"><a href={{page_user.website_url}}>Website Url</a></small></p>
+          {% endif %}
+          {% if page_user.contact %}
+          <p class="card-text"><small class="text-body-secondary">Contact: {{page_user.contact}}</small></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

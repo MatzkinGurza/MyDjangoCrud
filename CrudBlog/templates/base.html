@@ -61,10 +61,17 @@
                   Account
                 </a>
                 <ul class="dropdown-menu" style="max-height: 200px; overflow-y: auto; border-radius: 0px;">
+                  <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Edit Account</a></li>
+                  {% if user.profile.id  %}
+                    <li><a class="dropdown-item" href="{% url 'edit_profile_page' user.profile.id %}">Edit Profile Page</a></li>
+                    <li><a class="dropdown-item" href="{% url 'user_profile' user.profile.id %}">Show Profile Page</a></li>
+                  {% else  %}
+                    <li><a class="dropdown-item" href="{% url 'create_profile_page' %}">Create Profile Page</a></li>
+                  {% endif  %}
                   <li>
                   <form method="post" class="dropdown-item" action="{% url 'logout' %}">
                     {% csrf_token %}
-                    <button class="btn btn-outline-secondary" type="submit">Logout</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="submit">Logout</button>
                   </form>
                   </li>
               {% else %}
