@@ -40,9 +40,8 @@
 {% if post.image_url %}
     <img src="{{ post.image_url }}" alt="Imagem do Post", class="img-thumbnail w-25">
 {% endif %}
-<br/>
 {{ post.body|safe }}<br/>
-{{ total_likes }} users liked this post<br/>
+| {{ total_likes }} users liked this post<br/>
 {% if user.is_authenticated %}
     {% if user.id == post.author.id %}
         <small><a href="{% url 'update_post' post.pk %}">(Edit)</a></small><br/>

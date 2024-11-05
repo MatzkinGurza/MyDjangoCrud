@@ -7,7 +7,7 @@ from .forms import SignUpForm, EditProfileForm, PostProfilePageForm, ProfilePage
 from django.contrib.auth.views import PasswordChangeView
 import requests
 from django.conf import settings
-from CrudBlog.models import Profile
+from CrudBlog.models import Profile, Post
 
 class CreateProfilePageView(CreateView):
     model = Profile
@@ -55,6 +55,8 @@ class EditProfilePageView(generic.UpdateView):
                 form.instance.profilepic_url = data['data']['link']
 
         return super().form_valid(form)
+
+       
         
 
 class ShowProfilePageView(DetailView):
@@ -66,7 +68,10 @@ class ShowProfilePageView(DetailView):
         context = super(ShowProfilePageView, self).get_context_data(*args, **kwargs)
         page_user = get_object_or_404(Profile, id=self.kwargs['pk'])
         context["page_user"] = page_user
+        user_posts = Post.objects.filter(author=page_user.user)
+        context["user_posts"] = user_posts
         return context
+    
 
 class UserRegisterView(generic.CreateView):
     form_class = SignUpForm

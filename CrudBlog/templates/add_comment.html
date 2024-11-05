@@ -15,11 +15,16 @@
     </form>
 </div>
 
+<script>
+    var name = "{{user.username}}";
+    document.getElementById("Comment_authorID").value = name;
+</script>
 
 {% else %}
 <h2> You need to be logged in to do this</h2>
 
 {% endif %}
+
 
 <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
 

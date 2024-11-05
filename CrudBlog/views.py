@@ -1,7 +1,7 @@
 from django.shortcuts import render,  get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category, Comment
-from .forms import PostForm, PostFormUpdate
+from .forms import PostForm, PostFormUpdate, CommentForm
 from django.urls import reverse_lazy, reverse
 import requests
 from django.conf import settings
@@ -10,8 +10,13 @@ from django.http import Http404, HttpResponseRedirect
 class AddCommentView(CreateView):
     model = Comment
     template_name = 'add_comment.html'
-    fields = '__all__'
-    # fields = ('title', 'tag','body')
+    # fields = '__all__'
+    form_class = CommentForm
+    # success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.instance.post_id = self.kwargs['pk']
+        return super().form_valid(form)
 
 
 class HomeView(ListView):

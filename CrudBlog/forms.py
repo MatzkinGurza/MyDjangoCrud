@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Category
+from .models import Post, Category, Comment
 
 choices = [x for x in Category.objects.all().values_list('name','name')] #to pass choices into forms select
 class PostForm(forms.ModelForm):
@@ -34,4 +34,15 @@ class PostFormUpdate(forms.ModelForm):
             'tag': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'choose a tag for the post'}), 
             'body': forms.Textarea(attrs={'class': 'form-control','placeholder':'write your post here'}),
             'category': forms.Select(choices=choices, attrs={'class': 'form-control'}),
+        }
+
+
+class CommentForm(forms.ModelForm):
+   
+    class Meta:
+        model = Comment
+        fields = ('name', 'body')
+        widgets = {
+        'name': forms.TextInput(attrs={'class': 'form-control', 'value':'', 'id':'Comment_authorID', 'type': 'hidden'}), 
+        'body': forms.Textarea(attrs={'class': 'form-control'}), 
         }

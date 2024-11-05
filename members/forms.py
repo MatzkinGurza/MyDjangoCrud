@@ -2,7 +2,7 @@ from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.contrib.auth.models import User
-from CrudBlog.models import Profile
+from CrudBlog.models import Profile, Comment
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(widget = forms.EmailInput(attrs={'class': 'form-control','placeholder':'Email'}))
@@ -55,3 +55,5 @@ class ProfilePageForm(forms.ModelForm):
         'website_url': forms.TextInput(attrs={'class': 'form-control', 'placeholder':'write your website url here'}), 
         'contact': forms.TextInput(attrs={'class': 'form-control','placeholder':'add a form of contact here'}),
         }
+
+

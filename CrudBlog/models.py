@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('category_list')
     
 
 class Post(models.Model):
@@ -31,7 +31,7 @@ class Post(models.Model):
         return self.title + ' | ' + str(self.author)
 
     def get_absolute_url(self):
-        return reverse('home')
+        return reverse('article-detail', args=[str(self.pk)])
     
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
@@ -52,3 +52,6 @@ class Comment(models.Model):
         
     def __str__(self):
         return '%s - %s' %(self.post.title, self.name)
+    
+    def get_absolute_url(self):
+        return reverse('article-detail', args=[str(self.post.pk)])
