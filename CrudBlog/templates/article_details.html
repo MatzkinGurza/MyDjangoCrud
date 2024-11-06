@@ -5,18 +5,18 @@
 
 {% block content %}
 <br/>
-<h3>Author</h3>
-<br/>
+<h4>Author of: {{post.title}}</h4>
+<hr>
 <div class="card mb-3">
     <div class="row no-gutters">
       <div class="col-md-2">
         {% if post.author.profile.profilepic_url %}
         <img src="{{post.author.profile.profilepic_url}}" class="img-fluid rounded-start" alt="profile picture" >
         {% else %}
-        <img src="{% static 'CrudBlog/images/default_profile_pic.jpeg' %}" class="img-fluid rounded-start" alt="profile picture" >
+        <img src="{% static 'CrudBlog/images/default_profile_pic.jpeg' %}" class="card-img-top" alt="profile picture" >
         {% endif %}
     </div>
-      <div class="col-md-10">
+      <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title"><a href="{% url 'user_profile' post.author.profile.id %}">{{post.author}}</a></h5>
           {% if post.author.profile.bio %}
@@ -34,7 +34,7 @@
   </div>
 <hr>
 
-<h2>Post: {{post.title}}</h2>
+<!-- <h2>Post: {{post.title}}</h2>
 <small>{{ post.author.first_name }} {{post.author.last_name}} on <a href="{% url 'categories' post.category %}">{{post.category}}</a> - {{post.post_date|date:"d/m/Y" }}</small>
 <br/>
 {% if post.image_url %}
@@ -76,13 +76,78 @@
         {{comment.body}}
         <br/>
     {% endfor %}
-{% endif %}
-<br/>
-<br/>
+{% endif %} -->
+
+<div class="container my-5">
+  <div class="post-container border rounded p-4 shadow-sm">
+      <h2 class="post-title text-primary">{{ post.title }}</h2>
+      <small class="text-muted">
+          {{ post.author.first_name }} {{ post.author.last_name }} on 
+          <a href="{% url 'categories' post.category %}" class="text-decoration-none text-info">{{ post.category }}</a> - 
+          {{ post.post_date|date:"d/m/Y" }}
+      </small>
+
+      {% if post.image_url %}
+          <div class="image-container my-3 text-center">
+              <img src="{{ post.image_url }}" alt="Imagem do Post" class="img-thumbnail w-50">
+          </div>
+      {% endif %}
+
+      <p class="post-body fs-5">{{ post.body|safe }}</p>
+
+      <div class="post-likes text-muted mb-3">
+          | {{ total_likes }} users liked this post
+      </div>
+
+      {% if user.is_authenticated %}
+          <div class="post-actions d-flex align-items-center justify-content-between  mb-3">
+            <form action="{% url 'like_post' post.pk %}" method="POST">
+              {% csrf_token %}
+              {% if liked %}
+              <button class="btn btn-outline-danger btn-sm" type="submit" name="post_id" value="{{post.id}}">
+                  Unlike
+              </button>
+              {% else %}
+              <button class="btn btn-outline-primary btn-sm" type="submit" name="post_id" value="{{post.id}}">
+                  Like
+              </button>
+              {% endif %}
+                | {{ total_likes }} Likes
+            </form> 
+            <div class="d-flex">
+              {% if user.id == post.author.id %}
+                  <a href="{% url 'update_post' post.pk %}" class="btn btn-outline-secondary btn-sm mr-2">Edit</a>
+                  <a href="{% url 'delete_post' post.pk %}" class="btn btn-outline-secondary btn-sm ml-2 mr-2">Delete</a>
+              {% endif %}
+            </div>
+          </div>
+      {% endif %}
+  </div>
+
+  <hr class="my-4">
+  <div class="comments-section">
+      <h3 class="text-secondary">Comments</h3>
+      <a href="{% url 'add_comment' post.pk %}" class="btn btn-outline-primary btn-sm mb-3">Add Comment</a>
+
+      {% if not post.comments.all %}
+          <p class="text-muted">No Comments Yet...</p>
+      {% else %}
+          {% for comment in post.comments.all %}
+              <div class="comment mb-3 p-2 border rounded bg-light">
+                  <strong>{{ comment.name }} | {{ comment.date_added }}</strong>
+                  <p class="mb-0">{{ comment.body }}</p>
+              </div>
+          {% endfor %}
+      {% endif %}
+  </div>
+</div>
+
 <hr>
 
 <br/>
 <br/>
 <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+<br/>
+<br/>
 
 {% endblock %}

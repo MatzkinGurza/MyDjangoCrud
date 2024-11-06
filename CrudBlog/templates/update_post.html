@@ -5,7 +5,31 @@
 
 {% if user.is_authenticated %}
     {% if user.id == post.author.id %}
-        <h1>edit your blog post</h1>
+
+    <br/>
+    <br/>
+    <div class="card" style="width: 100%;">
+        <h1 class="card-header">Edit your blog post</h1>
+        <div class="card-body">
+            <div class="form-group">
+                <form method="POST" enctype="multipart/form-data">
+                    {% if post.image_url %}
+                    <strong>Current Image</strong><br/>
+                    <img src="{{ post.image_url }}" alt="Imagem do Post" class="img-thumbnail w-25">
+                    {% endif %}<br/>
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {{form.as_p}}
+                    <button class="btn btn-secondary">Update</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    <br/>
+    <br/>
+
+
+        <!-- <h1>edit your blog post</h1>
 
         <div class="form-group">
             <form method="POST" enctype="multipart/form-data">
@@ -18,9 +42,8 @@
                 {{form.as_p}}
                 <button class="btn btn-secondary">Update</button>
             </form>
-        </div>
+        </div> -->
 
-        <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
     {% else %}
         <h2> Your account does not have this permission</h2>
     {% endif %}
@@ -28,7 +51,9 @@
         <h2> You need to be logged in to do this</h2>
         
 {% endif %}
-
+    <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+    <br/>
+    <br/>
 
 {% endblock %}
 

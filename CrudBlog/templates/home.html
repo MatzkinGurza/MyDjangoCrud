@@ -28,7 +28,8 @@
             {% endif %}
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> | {{post.author}} on <a href="{% url 'categories' post.category %}">{{post.category}}</a>
+                    <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> 
+                    | <a href="{% url 'user_profile' post.author.profile.id %}">{{post.author}}</a> on <a href="{% url 'categories' post.category %}">{{post.category}}</a>
                     <p class="card-text">{{post.body|truncatewords:100|safe}}</p>
                     {% if user.is_authenticated %}
                         {% if user.id == post.author.id %}
