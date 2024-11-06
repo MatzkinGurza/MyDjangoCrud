@@ -5,7 +5,27 @@
 
 {% if user.is_authenticated %}
 <br/>
-<h1>Add Comment{{user.username}}</h1>
+<br/>
+<div class="card" style="width: 100%;">
+    <h1 class="card-header">Add comment as {{user.username}}</h1>
+    <div class="card-body">
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-secondary">Post Comment</button>
+            </form>
+        </div>
+        <script>
+            var name = "{{user.username}}";
+            document.getElementById("Comment_authorID").value = name;
+        </script>
+    </div>
+  </div>
+<br/>
+<br/>
+
+<!-- <h1>Add Comment as {{user.username}}</h1>
 
 <div class="form-group">
     <form method="POST">
@@ -18,7 +38,7 @@
 <script>
     var name = "{{user.username}}";
     document.getElementById("Comment_authorID").value = name;
-</script>
+</script> -->
 
 {% else %}
 <h2> You need to be logged in to do this</h2>
@@ -27,5 +47,6 @@
 
 
 <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
-
+<br/>
+<br/>
 {% endblock %}

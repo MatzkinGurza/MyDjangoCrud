@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %}Profile{% endblock %}
+{% block title %}{{page_user.user.username}} Profile{% endblock %}
 
 {% block content %}
 <br/>
@@ -41,7 +41,7 @@
         <div class="row g-0">
             {% if post.image_url %}
                 <div class="col-md-4">
-                    <img src="{{ post.image_url }}" alt="Imagem do Post" class="card-img-top">
+                    <img src="{{ post.image_url }}" alt="Imagem do Post" class="card-img-top" style="height: 100%;">
                 </div>
             {% endif %}
             <div class="col-md-8">
@@ -63,6 +63,8 @@
     </div>
         
     {% endfor %}
-
+    <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+    <br/>
+    <br/>
 
 {% endblock %}

@@ -5,7 +5,24 @@
 
 {% if user.is_authenticated %}
 
-        <br/>
+    <br/>
+    <br/>
+    <div class="card" style="width: 100%;">
+        <h1 class="card-header">Edit Account</h1>
+        <div class="card-body">
+            <div class="form-group">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <br/>
+
+        <!-- <br/>
         <h1>Edit Account</h1>
 
         <div class="form-group">
@@ -14,12 +31,16 @@
                 {{ form.as_p }}
                 <button class="btn btn-secondary">Save</button>
             </form>
-        </div>
+        </div> -->
 
 
 {% else %}
     <h2> You need to be logged in to do this</h2>
 
 {% endif %}
+
+<a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+<br/>
+<br/>
 
 {% endblock %}

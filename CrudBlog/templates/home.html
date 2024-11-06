@@ -2,14 +2,28 @@
 {% block title %}Blog - Home{% endblock %}
 
 {% block content %}
-
-<h1>Posts</h1>
+<br/>
+<div class="card text-bg-light mb-3" style="width: 100%;">
+    <div class="card-header text-center">{{user.first_name}} {{user.last_name}}</div>
+    <div class="card-body text-center">
+      <h5 class="card-title text-center">Welcome to The Voyager – Your Travel Story Hub.</h5>
+      <p class="card-text">At The Voyager, we’re more than just stories – 
+        we’re a community of young travelers sharing authentic experiences, 
+        from must-see festivals and hidden culinary gems to cozy stays and 
+        the places to avoid. Whether you’re looking to discover new adventures 
+        or steer clear of tourist traps, this is your space to explore, recommend, 
+        and learn from fellow wanderers. Join us as we share the real, unfiltered 
+        travel tales that make every journey unforgettable.</p>
+    </div>
+  </div>
+<h3>All Posts</h3>
+<hr>
     {% for post in object_list %}
     <div class="card mb-3">
         <div class="row g-0">
             {% if post.image_url %}
                 <div class="col-md-4">
-                    <img src="{{ post.image_url }}" alt="Imagem do Post" class="card-img-top">
+                    <img src="{{ post.image_url }}" alt="Imagem do Post" class="card-img-top" style="height: 100%;">
                 </div>
             {% endif %}
             <div class="col-md-8">
