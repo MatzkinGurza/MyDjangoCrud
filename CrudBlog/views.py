@@ -46,6 +46,7 @@ class ArticleDetailView(DetailView):
         liked = False
         if current_post.likes.filter(id=self.request.user.id).exists():
             liked=True
+        context['comments'] = self.object.comments.all().order_by('-date_added')
         context['total_likes'] = current_post.total_likes()
         context["cat_menu"] = cat_menu
         context['liked'] = liked

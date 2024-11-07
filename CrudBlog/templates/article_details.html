@@ -131,7 +131,7 @@
       {% if not post.comments.all %}
           <p class="text-muted">No Comments Yet...</p>
       {% else %}
-          {% for comment in post.comments.all %}
+           {% for comment in comments %} <!--post.comments.all|reverse  -->
               <div class="comment mb-3 p-2 border rounded bg-light">
                   <strong>{{ comment.name }} | {{ comment.date_added }}</strong>
                   <p class="mb-0">{{ comment.body }}</p>
