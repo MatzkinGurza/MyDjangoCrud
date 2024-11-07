@@ -18,10 +18,12 @@
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> | {{post.author}}
-                                <p class="card-text">{{post.body|truncatewords:100|safe}}</p>
+                                <p class="card-text">{{post.body|truncatewords:60|safe}}</p>
                                 {% if user.is_authenticated %}
+                                {% if user.id == post.author.id %}
                                 <small><a class="btn btn-primary" href="{% url 'update_post' post.pk %}">Edit</a></small>
                                 <small><a class="btn btn-primary" href="{% url 'delete_post' post.pk %}">Delete</a></small>
+                                {% endif %}
                                 {% endif %}
                             </div>
                         </div>
