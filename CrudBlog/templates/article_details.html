@@ -82,8 +82,8 @@
       <h2 class="post-title text-primary">{{ post.title }}</h2>
       <small class="text-muted">
           {{ post.author.first_name }} {{ post.author.last_name }} on 
-          <a href="{% url 'categories' post.category %}" class="text-decoration-none text-info">{{ post.category }}</a> - 
-          {{ post.post_date|date:"d/m/Y" }}
+          {% for category in post.category.all %}<a href="{% url 'categories' category %}">{{category}}</a>; {% endfor %} 
+            {{ post.post_date|date:"d/m/Y" }}
       </small>
 
       {% if post.image_url %}

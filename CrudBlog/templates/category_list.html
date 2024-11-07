@@ -2,14 +2,20 @@
 {% block title %}Blog - Category List{% endblock %}
 
 {% block content %}
-
+<br/>
+<br/>
 <h1>List of categories</h1>
-    <ul>
+    <br/>
+    <ul class="list-group">
     {% for cat in category_list %}
-    <li><a class="dropdown-item" href="{% url 'categories' cat %}">{{cat}}</a></li>
+    <li class="list-group-item"><a class="text-decoration-none" href="{% url 'categories' cat %}">{{cat}}</a></li>
     {% endfor %}
     </ul>
     <br/>
+
+
     <a class="btn btn-outline-secondary" href="{% url 'home' %}">Back</a>
+    <br/>
+    <br/>
 
 {% endblock %}

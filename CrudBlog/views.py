@@ -97,10 +97,13 @@ def CategoryListView(request):
     return render(request, 'category_list.html', {"category_list": category_list})
 
 def CategoryView(request, cats):
-    category_posts = Post.objects.filter(category=cats)
-    if not category_posts.exists():  # Se não houver posts com a categoria solicitada
+    category = get_object_or_404(Category, name=cats)
+    category_posts = Post.objects.filter(category=category)  # Filtra por categoria
+
+    if not category_posts.exists():
         raise Http404("Uma de duas opções: \n1) Categoria não encontrada \n2) Não há posts nesta categoria")
-    return render(request, 'categories.html', {'cats':cats.title(), "category_posts": category_posts})
+    
+    return render(request, 'categories.html', {'cats': category.name, "category_posts": category_posts})
 
 class UpdatePostView(UpdateView):
     model=Post

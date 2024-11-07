@@ -21,7 +21,7 @@ class Post(models.Model):
     body = RichTextField(blank=True, null=True)
     post_date = models.DateTimeField(auto_now_add=True)
     image_url = models.URLField(blank=True, null=True)  # Campo para o link da imagem
-    category = models.CharField(max_length=255, default="Unspecified")
+    category = models.ManyToManyField(Category, related_name="posts")
     likes = models.ManyToManyField(User, related_name='blog_posts')
     
     def total_likes(self):
