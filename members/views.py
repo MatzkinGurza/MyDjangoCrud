@@ -1,6 +1,6 @@
 from django.shortcuts import render,  get_object_or_404
 from django.views import generic
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, UpdateView
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordChangeForm
 from django.urls import reverse_lazy
 from .forms import SignUpForm, EditProfileForm, PostProfilePageForm, ProfilePageForm
@@ -33,7 +33,7 @@ class CreateProfilePageView(CreateView):
         return super().form_valid(form)
 
 
-class EditProfilePageView(generic.UpdateView):
+class EditProfilePageView(UpdateView):
     model = Profile
     form_class = PostProfilePageForm
     template_name = 'registration/edit_profile_page.html'

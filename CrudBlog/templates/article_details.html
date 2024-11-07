@@ -6,16 +6,16 @@
 <br/>
 <h4>Author of: {{post.title}}</h4>
 <hr>
-<div class="card mb-3">
+<div class="card mb-2">
     <div class="row no-gutters">
       <div class="col-md-2">
         {% if post.author.profile.profilepic_url %}
-        <img src="{{post.author.profile.profilepic_url}}" class="img-fluid rounded-start" alt="profile picture" >
+        <img src="{{post.author.profile.profilepic_url}}" class="img-fluid rounded-start" alt="profile picture" style="height: 100%;" >
         {% else %}
-        <img src="{% static 'CrudBlog/images/default_profile_pic.jpeg' %}" class="card-img-top" alt="profile picture" >
+        <img src="{% static 'CrudBlog/images/default_profile_pic.jpeg' %}" class="card-img-top" alt="profile picture" style="height: 100%;">
         {% endif %}
     </div>
-      <div class="col-md-8">
+      <div class="col-md-10">
         <div class="card-body">
           <h5 class="card-title"><a href="{% url 'user_profile' post.author.profile.id %}">{{post.author}}</a></h5>
           {% if post.author.profile.bio %}
