@@ -23,7 +23,7 @@ IMGUR_CLIENT_ID = "017429aafa9c2c9"
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-q0y5)4h2*h3k$(y%idm3fp4y96)^k=&jj21%ww^v7f_heri-q3"
+SECRET_KEY = os.environ.get("SECRET_KEY", "default-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
