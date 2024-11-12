@@ -1,7 +1,7 @@
 from django import forms
 from .models import Post, Category, Comment
 
-choices = [x for x in Category.objects.all().values_list('name','name')] #to pass choices into forms select
+# choices = [x for x in Category.objects.all().values_list('name','name')] #to pass choices into forms select
 class PostForm(forms.ModelForm):
     image = forms.ImageField(required=False)  # campo para upload de imagem
 
