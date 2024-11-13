@@ -72,6 +72,10 @@ class AddPostView(CreateView):
 
             if response.status_code == 200 and data['success']:
                 form.instance.image_url = data['data']['link']
+            
+            else:
+                # Log failure details
+                print("Imgur upload failed:", response.status_code, data)
         
         return super().form_valid(form)
     
@@ -124,6 +128,9 @@ class UpdatePostView(UpdateView):
 
             if response.status_code == 200 and data['success']:
                 form.instance.image_url = data['data']['link']
+            else:
+                # Log failure details
+                print("Imgur upload failed:", response.status_code, data)
         
         return super().form_valid(form)
     
