@@ -76,6 +76,12 @@ class AddPostView(CreateView):
             else:
                 # Log failure details
                 print("Imgur upload failed:", response.status_code, data)
+            
+            url = "https://api.imgur.com/3/credits"
+            headers = {"Authorization": "Client-ID 017429aafa9c2c9"}
+
+            response = requests.get(url, headers=headers)
+            print("Imgur API Quota Check:", response.status_code, response.json())
         
         return super().form_valid(form)
     
@@ -131,6 +137,12 @@ class UpdatePostView(UpdateView):
             else:
                 # Log failure details
                 print("Imgur upload failed:", response.status_code, data)
+            
+            url = "https://api.imgur.com/3/credits"
+            headers = {"Authorization": "Client-ID 017429aafa9c2c9"}
+
+            response = requests.get(url, headers=headers)
+            print("Imgur API Quota Check:", response.status_code, response.json())
         
         return super().form_valid(form)
     
