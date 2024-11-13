@@ -26,7 +26,7 @@ IMGUR_CLIENT_ID = "017429aafa9c2c9"
 SECRET_KEY = os.environ.get("SECRET_KEY", "default-secret-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", ".onrender.com"] # modifique esta linha
 
@@ -90,8 +90,23 @@ WSGI_APPLICATION = "MateusGurzaCrud.wsgi.application"
 
 import dj_database_url
 
+# DATABASES = {
+#     'default': dj_database_url.config(default=
+#     "postgresql://database_thevoyager_user:disNwyK3nHlOzDjcJcw5tzwOpQEX3tRC@dpg-cspogrl6l47c739fmik0-a.oregon-postgres.render.com/database_thevoyager")
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'database_thevoyager',
+        'USER': 'database_thevoyager_user',
+        'PASSWORD': 'disNwyK3nHlOzDjcJcw5tzwOpQEX3tRC',
+        'HOST': 'dpg-cspogrl6l47c739fmik0-a.oregon-postgres.render.com',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',  # Certifique-se de que SSL é necessário para conectar
+        },
+    }
 }
 
 

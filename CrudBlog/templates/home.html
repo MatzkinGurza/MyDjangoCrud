@@ -29,7 +29,12 @@
             <div class="col-md-8">
                 <div class="card-body">
                     <h5 class="card-title"><a href="{% url 'article-detail' post.pk %}"> {{post.title}}</a></h5> 
-                    | <a href="{% url 'user_profile' post.author.profile.id %}">{{post.author}}</a> on {% for category in post.category.all %}<a href="{% url 'categories' category %}">{{category}}</a>; {% endfor %}
+                    | {% if post.author.profile %}
+                    <a href="{% url 'user_profile' post.author.profile.id %}">{{post.author}}</a>
+                    {% else %}
+                        {{ post.author }}
+                    {% endif %}
+                     on {% for category in post.category.all %}<a href="{% url 'categories' category %}">{{category}}</a>; {% endfor %}
                     <p class="card-text">{{post.body|truncatewords:60|safe}}</p>
                     {% if user.is_authenticated %}
                         {% if user.id == post.author.id %}

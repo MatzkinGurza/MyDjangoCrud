@@ -17,7 +17,13 @@
     </div>
       <div class="col-md-10">
         <div class="card-body">
-          <h5 class="card-title"><a href="{% url 'user_profile' post.author.profile.id %}">{{post.author}}</a></h5>
+        <h5 class="card-title">
+            {% if post.author.profile %}
+            <a href="{% url 'user_profile' post.author.profile.id %}">{{post.author}}</a>
+            {% else %}
+                {{ post.author }}
+            {% endif %}
+        </h5>
           {% if post.author.profile.bio %}
           <p class="card-text">{{post.author.profile.bio}}</p>
           {% endif %}
