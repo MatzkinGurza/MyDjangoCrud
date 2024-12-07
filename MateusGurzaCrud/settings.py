@@ -95,16 +95,31 @@ import dj_database_url
 #     "postgresql://database_thevoyager_user:disNwyK3nHlOzDjcJcw5tzwOpQEX3tRC@dpg-cspogrl6l47c739fmik0-a.oregon-postgres.render.com/database_thevoyager")
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'database_thevoyager',
+#         'USER': 'database_thevoyager_user',
+#         'PASSWORD': 'disNwyK3nHlOzDjcJcw5tzwOpQEX3tRC',
+#         'HOST': 'dpg-cspogrl6l47c739fmik0-a.oregon-postgres.render.com',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'require',  # Certifique-se de que SSL é necessário para conectar
+#         },
+#     }
+# } #ESSE ERA O BANCO DE DADOS ANTIGOS NO RENDER CONTA USP
+
+#NOVO 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'database_thevoyager',
-        'USER': 'database_thevoyager_user',
-        'PASSWORD': 'disNwyK3nHlOzDjcJcw5tzwOpQEX3tRC',
-        'HOST': 'dpg-cspogrl6l47c739fmik0-a.oregon-postgres.render.com',
-        'PORT': '5432',
+        'NAME': 'crudblogdb',  # Nome do banco de dados
+        'USER': 'mateus',      # Nome do usuário
+        'PASSWORD': 'riEdyZlJx7lREd8UP7BfX3bC2NWLuNJC',  # Senha do banco de dados
+        'HOST': 'dpg-ct9rt30gph6c73egj9mg-a.oregon-postgres.render.com',  # Host do banco
+        'PORT': '5432',        # Porta padrão do PostgreSQL
         'OPTIONS': {
-            'sslmode': 'require',  # Certifique-se de que SSL é necessário para conectar
+            'sslmode': 'require',  # Necessário para conexões SSL no Render
         },
     }
 }
